@@ -1,0 +1,4 @@
+id,name,neighbourhood_cleansed,latitude,longitude,room_type,price
+1,Cosy Old Town Flat,Old Town,55.9490,-3.1910,Entire home/apt,$75.00
+2,New Town Double Room,New Town,55.9560,-3.2010,Private room,$45.00
+3,Leith Studio,Leith,55.9730,-3.1720,Entire home/apt,$60.00

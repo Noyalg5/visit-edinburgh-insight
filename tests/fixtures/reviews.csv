@@ -1,0 +1,4 @@
+id,listing_id,date,reviewer_id,reviewer_name,comments
+101,1,2023-05-01,201,Alice,Great place to stay in Edinburgh!
+102,1,2023-06-15,202,Bob,Very nice neighbourhood close to the castle.
+103,2,2023-07-20,203,Carol,Good location in the New Town.

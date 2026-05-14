@@ -15,4 +15,4 @@ INSIDE_AIRBNB_REVIEWS_URL: str = (
     "/2025-09-21/data/reviews.csv.gz"
 )
 
-OVERPASS_URL: str = "https://overpass-api.de/api/interpreter"
+OVERPASS_URL: str = "https://overpass.private.coffee/api/interpreter"  # overpass-api.de returns 406 from this network
