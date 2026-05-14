@@ -1,0 +1,8 @@
+{
+  "raw_pois_count": 2285,
+  "clean_pois_count": 2270,
+  "poi_duplicate_reduction_pct": 0.66,
+  "raw_reviews_count": 559087,
+  "clean_reviews_count": 473295,
+  "review_filter_drop_pct": 15.35
+}

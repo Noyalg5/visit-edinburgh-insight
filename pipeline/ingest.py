@@ -14,6 +14,7 @@ from pipeline.config import (
     DB_PATH,
     EDINBURGH_BBOX,
     INSIDE_AIRBNB_LISTINGS_URL,
+    INSIDE_AIRBNB_NEIGHBOURHOODS_URL,
     INSIDE_AIRBNB_REVIEWS_URL,
     OVERPASS_URL,
 )
@@ -200,12 +201,14 @@ def _load_pois(conn: duckdb.DuckDBPyConnection, path: Path) -> int:
 # ---------------------------------------------------------------------------
 
 def run(refresh: bool = False) -> None:
-    listings_path = _AIRBNB_DIR / "listings.csv.gz"
-    reviews_path  = _AIRBNB_DIR / "reviews.csv.gz"
-    pois_path     = _OSM_DIR / "edinburgh_pois.json"
+    listings_path      = _AIRBNB_DIR / "listings.csv.gz"
+    reviews_path       = _AIRBNB_DIR / "reviews.csv.gz"
+    neighbourhoods_path = _AIRBNB_DIR / "neighbourhoods.geojson"
+    pois_path          = _OSM_DIR / "edinburgh_pois.json"
 
     _download(INSIDE_AIRBNB_LISTINGS_URL, listings_path, refresh)
     _download(INSIDE_AIRBNB_REVIEWS_URL, reviews_path, refresh)
+    _download(INSIDE_AIRBNB_NEIGHBOURHOODS_URL, neighbourhoods_path, refresh)
     _fetch_overpass(pois_path, refresh)
 
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)

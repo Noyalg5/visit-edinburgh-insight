@@ -14,5 +14,9 @@ INSIDE_AIRBNB_REVIEWS_URL: str = (
     "https://data.insideairbnb.com/united-kingdom/scotland/edinburgh"
     "/2025-09-21/data/reviews.csv.gz"
 )
+INSIDE_AIRBNB_NEIGHBOURHOODS_URL: str = (
+    "https://data.insideairbnb.com/united-kingdom/scotland/edinburgh"
+    "/2025-09-21/visualisations/neighbourhoods.geojson"
+)
 
 OVERPASS_URL: str = "https://overpass.private.coffee/api/interpreter"  # overpass-api.de returns 406 from this network
