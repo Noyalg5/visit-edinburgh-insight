@@ -4,5 +4,8 @@
   "poi_duplicate_reduction_pct": 0.66,
   "raw_reviews_count": 559087,
   "clean_reviews_count": 473295,
-  "review_filter_drop_pct": 15.35
+  "review_filter_drop_pct": 15.35,
+  "exact_match_count": 541513,
+  "fuzzy_match_count": 693127,
+  "location_match_uplift_pct": 28.0
 }
