@@ -30,6 +30,11 @@ import streamlit as st
 from app.rules import get_recommendations
 from pipeline.config import DB_PATH
 
+# Use the full DB when available locally; fall back to the committed sample DB
+# on Streamlit Cloud where the full 662 MB file is not present.
+_SAMPLE_DB = _PROJECT_ROOT / "db" / "visit_sample.duckdb"
+_ACTIVE_DB = DB_PATH if DB_PATH.exists() else _SAMPLE_DB
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -57,7 +62,7 @@ _DEFAULT_COLOR = [100, 100, 100, 180]
 # ---------------------------------------------------------------------------
 
 def _conn() -> duckdb.DuckDBPyConnection:
-    return duckdb.connect(str(DB_PATH), read_only=True)
+    return duckdb.connect(str(_ACTIVE_DB), read_only=True)
 
 
 def _in(col: str, values: tuple, params: list) -> str:

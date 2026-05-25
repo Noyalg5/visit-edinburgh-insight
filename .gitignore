@@ -1,5 +1,6 @@
 data/
-db/
+db/*
+!db/visit_sample.duckdb
 .venv/
 .streamlit/
 __pycache__/
