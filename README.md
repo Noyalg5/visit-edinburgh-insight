@@ -2,7 +2,7 @@
 
 > A Python + DuckDB pipeline and Streamlit dashboard that turns 473,295 Airbnb visitor reviews and 2,270 Edinburgh POIs into actionable intelligence for destination marketers.
 
-**Live demo:** _coming soon — deploy to Streamlit Cloud and add URL here_
+**🚀 Live demo: https://visit-edinburgh-insight.streamlit.app/**
 
 ---
 
@@ -116,4 +116,4 @@ Python 3.11 · DuckDB 1.1.3 · pandas 2.2 · spaCy 3.8 (en_core_web_sm) · sente
 
 ## CV bullet
 
-Built a Python + DuckDB pipeline and Streamlit dashboard that ingested ~473K Edinburgh visitor reviews and ~2,270 OSM POIs, reduced duplicate POI records by 0.66%, improved free-text location-match accuracy by **5.3× more visitor-to-POI links via NER+fuzzy than exact substring matching**, and surfaced 8 neighbourhood-level visitor themes for destination-marketing recommendations. Deployed on Streamlit Cloud — _[live link]_.
+Built a Python + DuckDB pipeline and Streamlit dashboard that ingested ~473K Edinburgh visitor reviews and ~2,270 OSM POIs, reduced duplicate POI records by 0.66%, improved free-text location-match accuracy by **5.3× more visitor-to-POI links via NER+fuzzy than exact substring matching**, and surfaced 8 neighbourhood-level visitor themes for destination-marketing recommendations. Deployed on Streamlit Cloud — https://visit-edinburgh-insight.streamlit.app/
