@@ -5,9 +5,9 @@
   "raw_reviews_count": 559087,
   "clean_reviews_count": 473295,
   "review_filter_drop_pct": 15.35,
-  "exact_match_count": 66335,
-  "fuzzy_match_count": 218968,
-  "location_match_uplift_pct": 230.09,
+  "exact_match_count": 29053,
+  "fuzzy_match_count": 181724,
+  "location_match_uplift_pct": 525.49,
   "theme_count": 8,
   "avg_cluster_size": 59161.9,
   "theme_labels": [

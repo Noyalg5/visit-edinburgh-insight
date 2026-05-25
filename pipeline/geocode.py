@@ -39,6 +39,8 @@ _EXACT_BLOCKLIST: frozenset[str] = frozenset({
     "gate", "lane", "road", "street", "bridge", "court", "hall", "hill",
     "view", "rise", "walk", "mill", "bank", "green", "grove", "vale",
     "lodge", "manor", "mews", "point", "ridge", "mount", "field",
+    # Multi-word generic phrases (OSM venue names that are too common in prose)
+    "the place", "the street",
 })
 
 _MIN_EXACT_LEN = 5  # skip POI names shorter than this
