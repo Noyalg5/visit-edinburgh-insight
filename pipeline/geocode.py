@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 
 import duckdb
 import numpy as np
@@ -27,26 +28,48 @@ _DISABLE = ["tagger", "parser", "senter", "attribute_ruler", "lemmatizer"]
 # Exact match
 # ---------------------------------------------------------------------------
 
+# Short or generic English words that produce massive false-positive rates
+# even with word-boundary matching (e.g. "close" in "it was close to the
+# station", "park" in "we parked nearby").  Names in this set are skipped
+# for exact matching but remain eligible for NER+fuzzy if spaCy tags them
+# as a proper-noun entity in context.
+_EXACT_BLOCKLIST: frozenset[str] = frozenset({
+    "eve", "che", "close", "home", "house", "place", "world", "store",
+    "shop", "front", "south", "north", "east", "west", "garden", "park",
+    "gate", "lane", "road", "street", "bridge", "court", "hall", "hill",
+    "view", "rise", "walk", "mill", "bank", "green", "grove", "vale",
+    "lodge", "manor", "mews", "point", "ridge", "mount", "field",
+})
+
+_MIN_EXACT_LEN = 5  # skip POI names shorter than this
+
+
 def _exact_match(
     reviews_df: pd.DataFrame,
     name_to_id: dict[str, int],
 ) -> list[dict]:
     """
-    Vectorised exact substring match: for each POI canonical name (≥3 chars),
-    use pandas str.contains(regex=False) to find all reviews that mention it.
-    Longer names first so a duplicate (review_id, poi_id) pair from a shorter
-    overlapping name is de-duplicated naturally by the seen set.
+    Word-boundary exact match: for each POI canonical name that passes the
+    length and blocklist filters, use \\b…\\b regex so "close" cannot match
+    "closely" and "home" cannot match "homemade".
+    Longer names first; a seen-set deduplicates (review_id, poi_id) pairs.
     """
-    comments    = reviews_df["comment_clean"].str.lower().fillna("")
-    review_ids  = reviews_df["review_id"].to_numpy()
+    comments   = reviews_df["comment_clean"].str.lower().fillna("")
+    review_ids = reviews_df["review_id"].to_numpy()
 
     seen:  set[tuple[int, int]] = set()
     links: list[dict]           = []
 
     for poi_name, poi_id in sorted(name_to_id.items(), key=lambda x: len(x[0]), reverse=True):
-        if not poi_name or len(poi_name) < 3:
+        if not poi_name:
             continue
-        mask = comments.str.contains(poi_name, regex=False, na=False)
+        if len(poi_name) < _MIN_EXACT_LEN:
+            continue
+        if poi_name in _EXACT_BLOCKLIST:
+            continue
+
+        pattern = rf"\b{re.escape(poi_name)}\b"
+        mask = comments.str.contains(pattern, regex=True, case=False, na=False)
         for rev_id in review_ids[mask.to_numpy()]:
             key = (int(rev_id), int(poi_id))
             if key in seen:

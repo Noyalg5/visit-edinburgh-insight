@@ -5,19 +5,19 @@
   "raw_reviews_count": 559087,
   "clean_reviews_count": 473295,
   "review_filter_drop_pct": 15.35,
-  "exact_match_count": 541513,
-  "fuzzy_match_count": 693127,
-  "location_match_uplift_pct": 28.0,
+  "exact_match_count": 66335,
+  "fuzzy_match_count": 218968,
+  "location_match_uplift_pct": 230.09,
   "theme_count": 8,
   "avg_cluster_size": 59161.9,
   "theme_labels": [
-    "town \u00b7 centre \u00b7 mile \u00b7 royal \u00b7 restaurants",
-    "room \u00b7 house \u00b7 home \u00b7 helpful \u00b7 friendly",
-    "quiet \u00b7 centre \u00b7 helpful \u00b7 definitely \u00b7 located",
-    "friendly \u00b7 helpful \u00b7 responsive \u00b7 amazing \u00b7 room",
-    "time \u00b7 home \u00b7 definitely \u00b7 helpful \u00b7 wonderful",
-    "room \u00b7 kitchen \u00b7 quiet \u00b7 bathroom \u00b7 need",
-    "restaurants \u00b7 castle \u00b7 centre \u00b7 definitely \u00b7 distance",
-    "definitely \u00b7 enjoyed \u00b7 loved \u00b7 staying \u00b7 thank"
+    "town · centre · mile · royal · restaurants",
+    "room · house · home · helpful · friendly",
+    "quiet · centre · helpful · definitely · located",
+    "friendly · helpful · responsive · amazing · room",
+    "time · home · definitely · helpful · wonderful",
+    "room · kitchen · quiet · bathroom · need",
+    "restaurants · castle · centre · definitely · distance",
+    "definitely · enjoyed · loved · staying · thank"
   ]
 }

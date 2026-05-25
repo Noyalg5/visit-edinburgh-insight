@@ -1,16 +1,17 @@
 """
 Happy-path tests for pipeline.geocode.
 
-3 POIs + 4 reviews demonstrate exact (substring) vs NER+fuzzy behaviour:
-  review 1 — "Old Town"           exact hit
+3 POIs + 4 reviews demonstrate exact (word-boundary) vs NER+fuzzy behaviour:
+  review 1 — "Old Town"           exact hit  (\\bold town\\b matches)
   review 2 — "Grassmarket"        exact hit
-  review 3 — "Waverley Stations"  exact hit  (singular 'waverley station' is a
-                                  substring of plural 'waverley stations')
-  review 4 — "Grass Market"       exact MISS (space-separated vs one-word canonical
-                                  'grassmarket'); mock NER tags it as LOC; rapidfuzz
-                                  scores "grass market" vs "grassmarket" at ~96 → fuzzy hit.
+  review 3 — "Waverley Stations"  exact MISS (\\bwaverley station\\b requires a
+                                  word boundary after 'station'; 'stations' has
+                                  no boundary there → blocked, as intended)
+  review 4 — "Grass Market"       exact MISS (space vs no-space); mock NER tags
+                                  it as LOC; rapidfuzz scores "grass market" vs
+                                  "grassmarket" at ~96 → fuzzy hit.
 
-Result: exact finds 3 links, NER+fuzzy finds 4 → proved uplift.
+Result: exact finds 2 links, NER+fuzzy finds 3 → proved uplift.
 """
 
 import pandas as pd
@@ -76,21 +77,21 @@ def fixture_data():
 # Tests
 # ---------------------------------------------------------------------------
 
-def test_exact_match_finds_substrings(fixture_data):
+def test_exact_match_word_boundaries(fixture_data):
     """
-    Substring pass (no word boundaries) finds 3 of 4 reviews.
-    'waverley station' is a substring of 'waverley stations' → now matched.
-    'grassmarket' is NOT a substring of 'grass market' (different char) → missed.
+    Word-boundary pass finds 2 of 4 reviews.
+    'waverley station' does NOT match 'waverley stations' — \\b blocks the plural.
+    'grassmarket' does NOT match 'grass market' — space breaks the token.
     """
     _, reviews, _, name_to_id = fixture_data
     links = _exact_match(reviews, name_to_id)
     pairs = {(d["review_id"], d["poi_id"]) for d in links}
 
-    assert len(links) == 3, f"Expected 3 exact links, got {len(links)}: {links}"
+    assert len(links) == 2, f"Expected 2 exact links, got {len(links)}: {links}"
     assert (1, 1) in pairs, "Old Town should be an exact match"
     assert (2, 2) in pairs, "Grassmarket should be an exact match"
-    assert (3, 3) in pairs, "'waverley station' is a substring of 'waverley stations'"
-    assert (4, 2) not in pairs, "'grassmarket' must NOT match 'grass market' (space differs)"
+    assert (3, 3) not in pairs, r"\bwaverley station\b must NOT match 'waverley stations'"
+    assert (4, 2) not in pairs, "'grassmarket' must NOT match 'grass market' (space)"
 
 
 def test_fuzzy_beats_exact(fixture_data):
