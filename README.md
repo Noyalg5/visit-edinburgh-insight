@@ -65,7 +65,9 @@ All numbers are sourced directly from `pipeline/metrics.json`, which is written 
 git clone git@github.com:Noyalg5/visit-edinburgh-insight.git
 cd visit-edinburgh-insight
 python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+
+# Full pipeline development (exact pins, all dependencies):
+pip install -r requirements-dev.txt
 python -m spacy download en_core_web_sm
 
 # 2. Run the pipeline (takes ~2 h on first run; skips downloads if cached)
@@ -81,6 +83,9 @@ streamlit run app/dashboard.py
 The full pipeline writes to `db/visit.duckdb` (not committed — 662 MB).
 The repo ships with `db/visit_sample.duckdb` (30,000 reviews) so the
 deployed Streamlit Cloud app works without re-running the pipeline.
+
+> `requirements.txt` contains runtime-only loose pins for Streamlit Cloud deployment.
+> `requirements-dev.txt` has exact pins for the full local pipeline environment.
 
 ---
 
